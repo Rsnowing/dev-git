@@ -23,8 +23,10 @@ function main() {
 
 function start() {
   try {
-    execSync('git checkout master')
-    execSync('git pull', { encoding: 'utf8' })
+    // execSync('git checkout master')
+    // execSync('git pull', { encoding: 'utf8' })
+    execSync('git checkout -b dev origin/master', { encoding: 'utf8' })
+    execSync('git push origin dev --set-upstream', { encoding: 'utf8' })
   } catch (error) {
     console.log(error)
   }
