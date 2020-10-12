@@ -1,0 +1,39 @@
+{
+  "name": "dev-git",
+  "version": "1.0.0",
+  "description": "开发时 git自动化流程",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index --version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rsnowing/dev-git.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rsnowing/dev-git/issues"
+  },
+  "homepage": "https://github.com/Rsnowing/dev-git#readme",
+  "dependencies": {
+    "commander": "^6.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
+    "rollup": "^2.22.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}
