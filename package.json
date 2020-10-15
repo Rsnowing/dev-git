@@ -5,7 +5,14 @@
   "main": "index.js",
   "scripts": {
     "version": "node index --version",
-    "start": "node index -s"
+    "start": "node index --start",
+    "test": "node index --test",
+    "pre": "node index --pre",
+    "del": "node index --del",
+    "help": "node index --help"
+  },
+  "bin": {
+    "g": "bin/index"
   },
   "repository": {
     "type": "git",
