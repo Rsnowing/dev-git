@@ -69,6 +69,7 @@ function create(branch) {
 function merge(branch) {
   try {
     execSync(`git checkout ${branch}`)
+    execSync(`git pull origin ${branch}`)
     execSync(`git merge --no-ff ${DEVELOP}`, { encoding: 'utf8' })
     execSync(`git push origin ${branch}`, { encoding: 'utf8' })
   } catch (error) {
