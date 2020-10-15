@@ -24,7 +24,6 @@ function main() {
     del('test')
     create('dev')
     create('test')
-    create('pre')
   } else if (commander.test) {
     console.log('准备提测')
     // 提测流程
@@ -64,6 +63,7 @@ function merge(branch) {
 // 删除本地及远程分支
 function del(branch) {
   try {
+    // 先判断是否有本地and远程分支
     execSync(`git branch --delete --force ${branch}`, { encoding: 'utf8' })
     execSync(`git push origin --delete ${branch}`, { encoding: 'utf8' })
   } catch (e) {
