@@ -44,10 +44,8 @@ function main() {
 function checkout(branch) {
   execSync(`git checkout ${branch}`)
 }
-checkExit('dev')
 // 检查远程分支是否存在
 function checkExit(branch) {
-  // execSync(`git ls-remote --exit-code --heads origin ${branch}`, { encoding: 'utf8' })
   const res = execSync('git branch -a', { encoding: 'utf8' })
   let list = res.split('\n')
   list.map(item => item.trim())
@@ -56,7 +54,6 @@ function checkExit(branch) {
     const i = item.trim()
     i && fmtlist.push(i)
   })
-  console.log(fmtlist)
   return fmtlist.includes(branch)
 }
 
