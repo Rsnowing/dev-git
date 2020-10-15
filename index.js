@@ -13,7 +13,6 @@ commander
   .parse(process.argv)
 
 commander.on('--help', () => {})
-
 main()
 
 function main() {
@@ -29,6 +28,7 @@ function main() {
     // 提测流程
     merge('dev')
     merge('test')
+    checkout(DEVELOP)
   } else if (commander.pre) {
     console.log('准备预发, 如果没有pre分支自己建哦')
     // 预发布流程
@@ -39,6 +39,25 @@ function main() {
     del('dev')
     del('test')
   }
+}
+
+function checkout(branch) {
+  execSync(`git checkout ${branch}`)
+}
+checkExit('dev')
+// 检查远程分支是否存在
+function checkExit(branch) {
+  // execSync(`git ls-remote --exit-code --heads origin ${branch}`, { encoding: 'utf8' })
+  const res = execSync('git branch -a', { encoding: 'utf8' })
+  let list = res.split('\n')
+  list.map(item => item.trim())
+  let fmtlist = []
+  list.forEach(item => {
+    const i = item.trim()
+    i && fmtlist.push(i)
+  })
+  console.log(fmtlist)
+  return fmtlist.includes(branch)
 }
 
 // 从master创建分支
@@ -64,8 +83,12 @@ function merge(branch) {
 function del(branch) {
   try {
     // 先判断是否有本地and远程分支
-    execSync(`git branch --delete --force ${branch}`, { encoding: 'utf8' })
-    execSync(`git push origin --delete ${branch}`, { encoding: 'utf8' })
+    if (checkExit(branch)) {
+      execSync(`git branch --delete --force ${branch}`, { encoding: 'utf8' })
+    }
+    if (checkExit(`remotes/origin/${branch}`)) {
+      execSync(`git push origin --delete ${branch}`, { encoding: 'utf8' })
+    }
   } catch (e) {
     // console.error(e)
   }
