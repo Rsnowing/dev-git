@@ -7,9 +7,9 @@ const DEVELOP = execSync('git symbolic-ref --short -q HEAD', { encoding: 'utf8' 
 commander
   .version(version, '-v --version', '获取版本')
   .option('-s, --start', '开始开发 删除已有dev test pre 并从master重新签出这些分支')
-  .option('-t, --test', '提测 将开发分支合到dev test 并push')
-  .option('-p, --pre', '预发 将开发分支合到pre 并push。 如果没有pre分支自己建哦')
-  .option('-d, --del', '上线完成 删除dev test。 注： pre你自己删吧 啦啦啦')
+  .option('-t, --test', '提测 将开发分支合到test 并push')
+  .option('-d, --dev', '发布到开发分支 将开发分支合到dev push')
+  .option('-e, --end', '上线完成 删除dev test。 注： pre你自己删吧 啦啦啦')
   .parse(process.argv)
 
 commander.on('--help', () => {})
@@ -18,22 +18,28 @@ main()
 function main() {
   // 开始流程： dev test,
   if (commander.start) {
-    console.log('创建dev test pre分支')
+    console.log('创建dev test')
     del('dev')
     del('test')
     create('dev')
     create('test')
+  } else if (commander.dev) {
+    console.log('准备发布到开发环境')
+    // 提测流程
+    merge('dev')
+    checkout(DEVELOP)
   } else if (commander.test) {
     console.log('准备提测')
     // 提测流程
-    merge('dev')
     merge('test')
     checkout(DEVELOP)
-  } else if (commander.pre) {
-    console.log('准备预发, 如果没有pre分支自己建哦')
-    // 预发布流程
-    merge('pre')
-  } else if (commander.del) {
+  }
+  // else if (commander.pre) {
+  //   console.log('准备预发, 如果没有pre分支自己建哦')
+  //   // 预发布流程
+  //   merge('pre')
+  // }
+  else if (commander.end) {
     // 删除dev test 分支
     console.log('删除dev test, 注： pre你自己删吧 啦啦啦')
     del('dev')

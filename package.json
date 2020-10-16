@@ -1,6 +1,6 @@
 {
   "name": "dev-git",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "开发时 git自动化流程",
   "main": "index.js",
   "scripts": {
