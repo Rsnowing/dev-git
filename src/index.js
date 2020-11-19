@@ -7,8 +7,9 @@ const DEVELOP = execSync('git symbolic-ref --short -q HEAD', { encoding: 'utf8' 
 commander
   .version(version, '-v --version', '获取版本')
   .option('-s, --start', '开始开发 删除已有dev test pre 并从master重新签出这些分支')
-  .option('-t, --test', '提测 将开发分支合到test 并push')
-  .option('-d, --dev', '发布到开发分支 将开发分支合到dev push')
+  .option('-t, --test', '提测 将开发分支合到测试环境 并push')
+  .option('-d, --dev', '发布到开发环境 将开发分支合到dev push')
+  .option('-p, --pre', '发布到预发环境 将开发分支合到pre push')
   .option('-e, --end', '上线完成 删除dev test。 注： pre你自己删吧 啦啦啦')
   .parse(process.argv)
 
@@ -91,7 +92,6 @@ function merge(branch) {
 // 检查本地是否有未提交文件
 function getIsFileUnCommit() {
   let res = execSync('git status --untracked-files=all --porcelain', { encoding: 'utf8' })
-  console.log(res)
   return !!res
 }
 
