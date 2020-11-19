@@ -1,15 +1,16 @@
 {
   "name": "dev-git",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "开发时 git自动化流程",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "version": "node index --version",
-    "start": "node index --start",
-    "test": "node index --test",
-    "pre": "node index --pre",
-    "del": "node index --del",
-    "help": "node index --help"
+    "version": "node ./src/index --version",
+    "start": "node ./src/index --start",
+    "dev": "node ./src/index -d",
+    "test": "node ./src/index --test",
+    "pre": "node ./src/index --pre",
+    "del": "node ./src/index --del",
+    "help": "node ./src/index --help"
   },
   "bin": {
     "g": "bin/index"

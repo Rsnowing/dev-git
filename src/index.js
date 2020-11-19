@@ -2,8 +2,7 @@ const { version } = require('../package.json')
 const commander = require('commander')
 const { execSync } = require('child_process')
 const DEVELOP = execSync('git symbolic-ref --short -q HEAD', { encoding: 'utf8' }) // 开发分支名称
-let res = execSync('git status --untracked-files=all --porcelain', { encoding: 'utf8' })
-console.log(res)
+
 // commander: start, test, pre, del
 commander
   .version(version, '-v --version', '获取版本')
@@ -19,29 +18,26 @@ main()
 function main() {
   // 开始流程： dev test,
   if (commander.start) {
-    console.log('创建dev test')
+    console.log('创建dev test pre')
     del('dev')
     del('test')
+    del('pre')
     create('dev')
     create('test')
+    create('pre')
   } else if (commander.dev) {
     console.log('准备发布到开发环境')
-    // 提测流程
     merge('dev')
     checkout(DEVELOP)
   } else if (commander.test) {
     console.log('准备提测')
-    // 提测流程
     merge('test')
     checkout(DEVELOP)
-  }
-  // else if (commander.pre) {
-  //   console.log('准备预发, 如果没有pre分支自己建哦')
-  //   // 预发布流程
-  //   merge('pre')
-  // }
-  else if (commander.end) {
-    // 删除dev test 分支
+  } else if (commander.pre) {
+    console.log('准备预发')
+    merge('pre')
+    checkout(DEVELOP)
+  } else if (commander.end) {
     console.log('删除dev test, 注： pre你自己删吧 啦啦啦')
     del('dev')
     del('test')
@@ -76,6 +72,13 @@ function create(branch) {
 
 function merge(branch) {
   try {
+    const isFileUnCommit = getIsFileUnCommit()
+    console.log(isFileUnCommit)
+    if (isFileUnCommit) {
+      console.log('请先提交本地文件啦...')
+      return
+    }
+    return
     execSync(`git checkout ${branch}`)
     if (checkExit(`remotes/origin/${branch}`)) {
       execSync(`git pull origin ${branch}`)
@@ -85,6 +88,13 @@ function merge(branch) {
   } catch (error) {
     // console.log(error)
   }
+}
+
+// 检查本地是否有未提交文件
+function getIsFileUnCommit() {
+  let res = execSync('git status --untracked-files=all --porcelain', { encoding: 'utf8' })
+  console.log(res)
+  return !!res
 }
 
 // 删除本地及远程分支
