@@ -9,7 +9,7 @@
     "dev": "node ./src/index -d",
     "test": "node ./src/index --test",
     "pre": "node ./src/index --pre",
-    "del": "node ./src/index --del",
+    "end": "node ./src/index --end",
     "help": "node ./src/index --help"
   },
   "bin": {

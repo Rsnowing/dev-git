@@ -73,7 +73,6 @@ function create(branch) {
 function merge(branch) {
   try {
     const isFileUnCommit = getIsFileUnCommit()
-    console.log(isFileUnCommit)
     if (isFileUnCommit) {
       console.log('请先提交本地文件啦...')
       return
