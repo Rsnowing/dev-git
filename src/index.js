@@ -78,7 +78,6 @@ function merge(branch) {
       console.log('请先提交本地文件啦...')
       return
     }
-    return
     execSync(`git checkout ${branch}`)
     if (checkExit(`remotes/origin/${branch}`)) {
       execSync(`git pull origin ${branch}`)
