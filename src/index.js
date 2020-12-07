@@ -11,8 +11,9 @@ commander
   .option('-d, --dev', '发布到开发环境 将开发分支合到dev push')
   .option('-p, --pre', '发布到预发环境 将开发分支合到pre push')
   .option('-e, --end', '上线完成 删除dev test。 注： pre你自己删吧 啦啦啦')
+  .option('-c, --check <branch...>', '从master签出某个分支')
+  .option('-r, --remove <branch...>', '删除某个分支')
   .parse(process.argv)
-
 commander.on('--help', () => {})
 main()
 
@@ -26,22 +27,39 @@ function main() {
     create('dev')
     create('test')
     create('pre')
-  } else if (commander.dev) {
+  }
+  if (commander.dev) {
     console.log('准备发布到开发环境')
     merge('dev')
     checkout(DEVELOP)
-  } else if (commander.test) {
+  }
+  if (commander.test) {
     console.log('准备提测')
     merge('test')
     checkout(DEVELOP)
-  } else if (commander.pre) {
+  }
+  if (commander.pre) {
     console.log('准备预发')
     merge('pre')
     checkout(DEVELOP)
-  } else if (commander.end) {
+  }
+  if (commander.end) {
     console.log('删除dev test, 注： pre你自己删吧 啦啦啦')
     del('dev')
     del('test')
+  }
+  if (commander.check) {
+    console.log(`正在创建${commander.check + ''} 分支...`)
+    commander.check.map(branch => {
+      create(branch)
+    })
+    // checkout(DEVELOP)
+  }
+  if (commander.remove) {
+    console.log(`正在删除${commander.remove + ''}分支...`)
+    commander.remove.map(branch => {
+      del(branch)
+    })
   }
 }
 

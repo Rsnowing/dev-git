@@ -1,6 +1,6 @@
 {
   "name": "dev-git",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "开发时 git自动化流程",
   "main": "./src/index.js",
   "scripts": {
@@ -10,7 +10,10 @@
     "test": "node ./src/index --test",
     "pre": "node ./src/index --pre",
     "end": "node ./src/index --end",
-    "help": "node ./src/index --help"
+    "help": "node ./src/index --help",
+    "mul": "node ./src/index --dev --test",
+    "check": "node ./src/index -c ddd eee",
+    "remove": "node ./src/index --remove ddd eee "
   },
   "bin": {
     "g": "bin/index"
